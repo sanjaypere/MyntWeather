@@ -1,0 +1,10 @@
+<resources>
+
+
+    <style name="black_text_16">
+        <item name="android:textSize">@dimen/sixteen</item>
+        <item name="android:textColor">@color/black</item>
+    </style>
+
+
+</resources>
