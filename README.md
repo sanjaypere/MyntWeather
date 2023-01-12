@@ -12,6 +12,7 @@ Project details:
 Architecture: MVVM
 Android Studio Version: Android Studio Dolphin|2021.3.1
 Programming Language: Kotlin(213-1.7.20 and above)
+Device Supported: Android phone(Portrait Orientation)
 
 
 **You need to use your own OpenWeather API Key at below mantioned path**
@@ -19,3 +20,5 @@ Programming Language: Kotlin(213-1.7.20 and above)
 gradle.properties -> openWeatherApiKey
 
 
+Commits:
+37f7aa4: Project structure updated
