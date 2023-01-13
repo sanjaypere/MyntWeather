@@ -20,5 +20,14 @@ Device Supported: Android phone(Portrait Orientation)
 gradle.properties -> openWeatherApiKey
 
 
-Commits:
-37f7aa4: Project structure updated
+Commits
+
+37f7aa4: 
+Project structure updated
+
+27d47f6: 
+1. Splash Screen
+2. Login Screen
+3. Unit Test for LoginViewModel
+4. Room Database Setup using Hilt Dependency Injection
+5. Unit Test for UserDao
