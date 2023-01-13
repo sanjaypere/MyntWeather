@@ -31,3 +31,10 @@ Project structure updated
 3. Unit Test for LoginViewModel
 4. Room Database Setup using Hilt Dependency Injection
 5. Unit Test for UserDao
+
+768dc72
+
+1. Registration Screen
+2. Unit Test for RegistrationViewModel
+3. User Registration
+4. User Sign in
