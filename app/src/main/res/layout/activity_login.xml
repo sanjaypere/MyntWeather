@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <import type="android.view.View" />
+
+        <variable
+            name="listener"
+            type="com.mynt.weather.interfaces.MClickListener" />
+
+        <variable
+            name="vm"
+            type="com.mynt.weather.viewmodel.LoginViewModel" />
+
+    </data>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/gradient_background"
+        android:scrollbars="none">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            tools:context=".activities.LoginActivity">
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/guideline"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                app:layout_constraintGuide_percent="0.16" />
+
+            <ImageView
+                android:id="@+id/imageViewLogo"
+                android:layout_width="@dimen/hundredDp"
+                android:layout_height="@dimen/hundredDp"
+                android:src="@drawable/icon_weather"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/guideline" />
+
+            <EditText
+                android:id="@+id/editTextLoginEmail"
+                style="@style/edit_test_style"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/sixtyFourDp"
+                android:ems="10"
+                android:hint="@string/email"
+                android:inputType="textEmailAddress"
+                android:onTextChanged="@{vm::onEmailEditTextChanged}"
+                android:text="@={vm.user.email}"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/imageViewLogo" />
+
+
+            <TextView
+                android:id="@+id/textViewErrorEmail"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/fourDp"
+                android:layout_marginEnd="@dimen/fourDp"
+                android:text="@string/please_enter_valid_email"
+                android:textColor="@color/red"
+                android:visibility="@{vm.validEmail?View.INVISIBLE:View.VISIBLE,default=invisible}"
+                app:layout_constraintEnd_toEndOf="@id/editTextLoginEmail"
+                app:layout_constraintTop_toBottomOf="@id/editTextLoginEmail" />
+
+            <EditText
+                android:id="@+id/editTextLoginPassword"
+                style="@style/edit_test_style"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/sixteenDp"
+                android:ems="10"
+                android:hint="@string/password"
+                android:inputType="textPassword"
+                android:maxLength="6"
+                android:onTextChanged="@{vm::onPasswordEditTextChanged}"
+                android:text="@={vm.user.password}"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/textViewErrorEmail" />
+
+            <TextView
+                android:id="@+id/textViewErrorPassword"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/fourDp"
+                android:layout_marginEnd="@dimen/fourDp"
+                android:text="@string/please_enter_valid_password"
+                android:textColor="@color/red"
+                android:visibility="@{vm.validPassword?View.INVISIBLE:View.VISIBLE,default=invisible}"
+                app:layout_constraintEnd_toEndOf="@id/editTextLoginEmail"
+                app:layout_constraintTop_toBottomOf="@id/editTextLoginPassword" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/buttonLogin"
+                style="@style/button_style"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/sixteenDp"
+                android:onClick="@{v->listener.onButtonClicked(v)}"
+                android:text="@string/login"
+                android:textAllCaps="false"
+                android:textColor="@color/black"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/textViewErrorPassword" />
+
+            <TextView
+                android:id="@+id/textViewRegister"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="32dp"
+                android:text="@string/register_text"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/buttonLogin" />
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
+</layout>
