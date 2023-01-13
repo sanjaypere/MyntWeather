@@ -6,9 +6,12 @@
     <string name="name">Name</string>
     <string name="password">Password</string>
     <string name="register">Register</string>
-    <string name="login">Login</string>
-    <string name="register_text">Don\'t have an account. <u>Register now</u></string>
+    <string name="sign_in">Sign in</string>
+    <string name="register_text">Don\'t have an account. </string>
+    <string name="register_now"><u>Register now</u></string>
     <string name="please_enter_valid_email">Please enter valid email</string>
-    <string name="please_enter_valid_password">Please should be of 6 characters</string>
+    <string name="please_enter_valid_name">Name should be of 4 characters</string>
+    <string name="enter_valid_password">Password should be of 6 characters</string>
+    <string name="please_enter_valid_password">Please enter valid password</string>
     <string name="myntWeather">Mynt Weather</string>
 </resources>

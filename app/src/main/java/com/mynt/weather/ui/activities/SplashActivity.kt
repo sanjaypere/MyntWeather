@@ -1,4 +1,4 @@
-package com.mynt.weather.activities
+package com.mynt.weather.ui.activities
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity

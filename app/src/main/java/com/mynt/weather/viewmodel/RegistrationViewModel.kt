@@ -15,14 +15,17 @@ import net.sqlcipher.database.SQLiteConstraintException
 import javax.inject.Inject
 
 @HiltViewModel
-class LoginViewModel @Inject constructor(private val loginRepository: LoginRepository) :
+class RegistrationViewModel @Inject constructor(private val loginRepository: LoginRepository) :
     ViewModel() {
     private val _appResponse = MutableLiveData<AppResponse>()
     private val _validEmail = MutableLiveData<Boolean>()
+    private val _validName = MutableLiveData<Boolean>()
     private val _validPassword = MutableLiveData<Boolean>()
     private val _user = MutableLiveData<User>()
     val appResponse: LiveData<AppResponse>
         get() = _appResponse
+    val validName: LiveData<Boolean>
+        get() = _validName
     val validEmail: LiveData<Boolean>
         get() = _validEmail
     val validPassword: LiveData<Boolean>
@@ -34,23 +37,31 @@ class LoginViewModel @Inject constructor(private val loginRepository: LoginRepos
         _user.value = User(email = "", password = "")
         _validEmail.postValue(true)
         _validPassword.postValue(true)
+        _validName.postValue(true)
     }
 
-    fun proceedToLogin(user: User) {
+    fun registerUser(user: User) {
         _appResponse.postValue(AppResponse.Loading())
+        val vName = isValidName(user.name)
         val vEmail = isValidEmail(user.email)
         val vPassword = isValidPassword(user.password)
+        _validName.postValue(vName)
         _validEmail.postValue(vEmail)
         _validPassword.postValue(vPassword)
-        if (vEmail && vPassword) {
+        if (vName && vEmail && vPassword) {
             viewModelScope.launch {
-                val loggedInUser =
-                    loginRepository.getUserByEmailAndPassword(user.email, user.password)
-                loggedInUser?.let {
-                    _user.postValue(it)
-                    _appResponse.postValue(AppResponse.Success())
-                } ?: run {
-                    _appResponse.postValue(AppResponse.Error(message = Constants.notValidUser))
+                try {
+                    loginRepository.registerUser(user)
+                    val loggedInUser =
+                        loginRepository.getUserByEmailAndPassword(user.email, user.password)
+                    loggedInUser?.let {
+                        _user.postValue(it)
+                        _appResponse.postValue(AppResponse.Success())
+                    }
+                } catch (e: SQLiteConstraintException) {
+                    _appResponse.postValue(AppResponse.Error(message = Constants.userAlreadyRegistered))
+                } catch (e: Exception) {
+                    _appResponse.postValue(e.message?.let { AppResponse.Error(message = it) })
                 }
             }
         } else {
@@ -63,7 +74,11 @@ class LoginViewModel @Inject constructor(private val loginRepository: LoginRepos
     }
 
     fun isValidPassword(text: String?): Boolean {
-        return text?.trim()?.isNotEmpty() == true
+        return text?.trim()?.isNotEmpty() == true && text.length >= Constants.passwordLength
+    }
+
+    fun isValidName(text: String?): Boolean {
+        return text?.trim()?.isNotEmpty() == true && text.length >= Constants.nameLength
     }
 
     fun onEmailEditTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
@@ -72,5 +87,9 @@ class LoginViewModel @Inject constructor(private val loginRepository: LoginRepos
 
     fun onPasswordEditTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
         _validPassword.postValue(true)
+    }
+
+    fun onNameEditTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
+        _validName.postValue(true)
     }
 }

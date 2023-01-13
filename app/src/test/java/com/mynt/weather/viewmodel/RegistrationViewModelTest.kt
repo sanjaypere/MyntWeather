@@ -21,7 +21,7 @@ import org.mockito.Mock
 import org.mockito.Mockito
 import org.mockito.MockitoAnnotations
 
-class LoginViewModelTest {
+class RegistrationViewModelTest {
     @get:Rule
     val instantExecutorRule = InstantTaskExecutorRule()
     private val testDispatcher = StandardTestDispatcher()
@@ -29,12 +29,12 @@ class LoginViewModelTest {
     @Mock
     lateinit var repository: LoginRepositoryImp
 
-    lateinit var vm: LoginViewModel
+    lateinit var vm: RegistrationViewModel
 
     @Before
     fun setUp() {
         MockitoAnnotations.openMocks(this)
-        vm = LoginViewModel(repository)
+        vm = RegistrationViewModel(repository)
         Dispatchers.setMain(testDispatcher)
     }
 
@@ -60,55 +60,26 @@ class LoginViewModelTest {
 
     @Test
     fun validateInvalidPassword_expectedFalse() {
-        val result = vm.isValidPassword("")
+        val result = vm.isValidPassword("San")
         assertEquals(false, result)
     }
 
     @Test
-    fun validateUserNotRegistered_expectedError() = runTest {
-        val name = "Sanjay"
-        val emailId = "sanjay@gmail.com"
-        val password = "123456"
-        Mockito.`when`(
-            repository.getUserByEmailAndPassword(
-                email = emailId,
-                password = password
-            )
-        ).thenReturn(null)
-        vm.proceedToLogin(
-            User(
-                name = name,
-                email = emailId,
-                password = password
-            )
-        )
-        testDispatcher.scheduler.advanceUntilIdle()
-        val result = vm.user.getOrAwaitValue()
-        val appResponse = vm.appResponse.getOrAwaitValue()
-
-        assertNull(result.name)
-        assertTrue(appResponse is AppResponse.Error)
+    fun validateValidName_expectedTrue() {
+        val result = vm.isValidName("Sanjay")
+        assertEquals(true, result)
     }
 
     @Test
-    fun validateLoginWithInvalidCredential_expectedNull() = runTest {
-        Mockito.`when`(
-            repository.getUserByEmailAndPassword(
-                email = "sanjay@gmail.com",
-                password = "Sanjay@123456"
-            )
-        ).thenReturn(User(name = "Sanjay", email = "sanjay", password = "Sanjay@123456"))
-        vm.proceedToLogin(User(name = "Sanjay", email = "sanjay", password = "Sanjay@123456"))
-        testDispatcher.scheduler.advanceUntilIdle()
-        val result = vm.user.getOrAwaitValue()
-        val appResponse = vm.appResponse.getOrAwaitValue()
-
-        assertNull(result.name)
-        assertTrue(appResponse is AppResponse.Error)
+    fun validateInValidName_expectedFalse() {
+        val result = vm.isValidName("San")
+        assertEquals(false, result)
+        val result1 = vm.isValidName("")
+        assertEquals(false, result1)
     }
 
     @Test
-    fun validateLoginWithValidCredential_expectedSanjay() = runTest {
+    fun validateRegistrationWithInValidCredential_expectedNull() = runTest {
         val name = "Sanjay"
         val emailId = "sanjay@gmail.com"
         val password = "123456"
@@ -118,7 +89,39 @@ class LoginViewModelTest {
                 password = password
             )
         ).thenReturn(User(name = name, email = emailId, password = password))
-        vm.proceedToLogin(
+        Mockito.`when`(
+            repository.registerUser(User(name = name, email = emailId, password = password))
+        ).thenReturn(null)
+        vm.registerUser(
+            User(
+                name = "Sanjay",
+                email = "san@com",
+                password = "1234"
+            )
+        )
+        testDispatcher.scheduler.advanceUntilIdle()
+        val result = vm.user.getOrAwaitValue()
+        val appResponse = vm.appResponse.getOrAwaitValue()
+
+        assertNull(result.name)
+        assertTrue(appResponse is AppResponse.Error)
+    }
+
+    @Test
+    fun validateRegistrationWithValidCredential_expectedSanjay() = runTest {
+        val name = "Sanjay"
+        val emailId = "sanjay@gmail.com"
+        val password = "123456"
+        Mockito.`when`(
+            repository.getUserByEmailAndPassword(
+                email = emailId,
+                password = password
+            )
+        ).thenReturn(User(name = name, email = emailId, password = password))
+        Mockito.`when`(
+            repository.registerUser(User(name = name, email = emailId, password = password))
+        ).thenReturn(null)
+        vm.registerUser(
             User(
                 name = name,
                 email = emailId,
@@ -129,9 +132,42 @@ class LoginViewModelTest {
         val result = vm.user.getOrAwaitValue()
         val appResponse = vm.appResponse.getOrAwaitValue()
 
-        assertEquals("Sanjay", result.name)
+        assertEquals(name, result.name)
         assertTrue(appResponse is AppResponse.Success)
     }
+
+    @Test
+    fun validateUserAlreadyRegistered_expectedError() = runTest {
+        val name = "Sanjay"
+        val emailId = "sanjay@gmail.com"
+        val password = "123456"
+
+        Mockito.`when`(
+            repository.registerUser(User(name = name, email = emailId, password = password))
+        ).thenThrow(SQLiteConstraintException())
+
+        Mockito.`when`(
+            repository.getUserByEmailAndPassword(
+                email = emailId,
+                password = password
+            )
+        ).thenReturn(null)
+
+        vm.registerUser(
+            User(
+                name = name,
+                email = emailId,
+                password = password
+            )
+        )
+        testDispatcher.scheduler.advanceUntilIdle()
+        val result = vm.user.getOrAwaitValue()
+        val appResponse = vm.appResponse.getOrAwaitValue()
+
+        assertNull(result.name)
+        assertTrue(appResponse is AppResponse.Error)
+    }
+
 
     @Test
     fun validateOnEmailEditTextChanged_expectedTrue() {
@@ -144,6 +180,13 @@ class LoginViewModelTest {
     fun validateOnPasswordEditTextChanged_expectedTrue() {
         vm.onPasswordEditTextChanged("", 0, 0, 0)
         val result = vm.validPassword.getOrAwaitValue()
+        assertTrue(result)
+    }
+
+    @Test
+    fun validateOnNameEditTextChanged_expectedTrue() {
+        vm.onNameEditTextChanged("", 0, 0, 0)
+        val result = vm.validName.getOrAwaitValue()
         assertTrue(result)
     }
 
