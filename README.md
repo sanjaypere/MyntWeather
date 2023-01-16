@@ -11,6 +11,7 @@ The application also provide some other features such as:
 6. Depending on the sunrise and suneset time application will show the sun or moon icon.
 
 **Project details:**
+
 Architecture: MVVM
 
 Android Studio Version: Android Studio Dolphin|2021.3.1
@@ -30,6 +31,10 @@ NOTE
 **Also update the Pass Code for Database encription at below mantioned path**
 
 gradle.properties -> passCode
+
+**Project Structure**
+
+<img width="785" alt="Screenshot 2023-01-16 at 5 34 08 PM" src="https://user-images.githubusercontent.com/122507300/212674287-0f4e711b-8b80-47c0-a6b7-afe5ddfbcf6b.png">
 
 **Security**
 
