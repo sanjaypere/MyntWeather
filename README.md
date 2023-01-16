@@ -23,7 +23,10 @@ Have enabled progard and minify
 
 **Unit Test**
 
-Unit Test for Room Database, Repository, ViewModel and Utils classes.
+Unit Test for Room Database, Repository, ViewModel and Utils classes. Above 90% test coverage.
+
+<img width="652" alt="Screenshot 2023-01-16 at 4 35 22 PM" src="https://user-images.githubusercontent.com/122507300/212664015-9146c5f6-5f47-42dc-874c-2864cb920c8b.png">
+
 
 NOTE
 
@@ -66,5 +69,22 @@ Project structure updated
 5. Unit test for WeatherViewModel
 6. Unit test for Utils classes.
 7. Unit test for WeatherDao
+
+NOTE: Being individual contributor have put all code in master directly.
+
+**App Screens**
+
+
+![SplashScreen](https://user-images.githubusercontent.com/122507300/212665612-386f2d5a-17f5-4492-b8c7-fa2c796a6fdf.jpeg)
+
+![SignInScreen](https://user-images.githubusercontent.com/122507300/212665642-e40581d8-e825-4a69-b5f1-95eabaebde2c.jpeg)
+
+![RegistrationScreen](https://user-images.githubusercontent.com/122507300/212665662-99137b6a-682f-4104-ad7e-d275aafb0d02.jpeg)
+
+![WeatherDetailScreen](https://user-images.githubusercontent.com/122507300/212665899-3865a14f-858a-4ff6-924b-f7b36ae83a6b.jpeg)
+
+![WeatherHistoryScreen](https://user-images.githubusercontent.com/122507300/212665933-69074cd0-8cf4-4d9d-983a-32a2904ac2ac.jpeg)
+
+![NoNetworkAvailableScreen](https://user-images.githubusercontent.com/122507300/212665992-dc3442bf-5e6e-4bf5-880d-e36eb5c3c806.jpeg)
 
 
