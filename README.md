@@ -1,13 +1,13 @@
 **Mynt Weather App**
 
-This appplication will provide you Weather update. Initiall you need to register into this application as a new user. Once you get login to the application you will be able to see two tabs. The first tab will contain the current weather and the second contains the list of weather fetched every time the user opens the application.
+This appplication will provide you Weather update. Initially you need to register into this application as a new user. Once you login to the application you will be able to see two tabs. The first tab contains the current weather and the second contains the list of weather information fetched every time the user opens the application.
 
 The application also provide some other features such as:
 1. Current location ( City and Country )
 2. Current temperature in Celsius
 3. Time of Sunrise and Sunset
 4. Current weather status
-5. Save weather detail whenever user opes the application
+5. Save weather detail whenever user opens the application
 6. Depending on the sunrise and suneset time application will show the sun or moon icon.
 
 **Project details:**
@@ -38,7 +38,7 @@ gradle.properties -> passCode
 
 - Under data folder we have covered API request logic, database logic, models and repository.
 
-- Under di folder we have covered dependency injection for Retrofit and Room DB
+- Under di folder we have covered dependency injection for Retrofit, Repository and Room DB
 
 - Under ui folder we have all activity, fragments and adapters.
 
@@ -59,39 +59,15 @@ Unit Test for Room Database, Repository, ViewModel and Utils classes. Above 90% 
 
 <img width="652" alt="Screenshot 2023-01-16 at 4 35 22 PM" src="https://user-images.githubusercontent.com/122507300/212664015-9146c5f6-5f47-42dc-874c-2864cb920c8b.png">
 
-**Commits**
+**Code Repository Location**
 
-37f7aa4: 
-Project structure updated
+https://github.com/sanjaypere/MyntWeather
 
-27d47f6: 
-1. Splash Screen
-2. Login Screen
-3. Unit Test for LoginViewModel
-4. Room Database Setup using Hilt Dependency Injection
-5. Unit Test for UserDao
+Please refer the above git location for commit history.
 
-768dc72
-
-1. Registration Screen
-2. Unit Test for RegistrationViewModel
-3. User Registration
-4. User Sign in
-
-30f4b4e
-
-1. OpenWeather API integration
-2. Saving weather detail to database
-3. Showing weather detail in 1st TAB
-4. Showing weather history list in 2nd TAB
-5. Unit test for WeatherViewModel
-6. Unit test for Utils classes.
-7. Unit test for WeatherDao
-
-NOTE: Being individual contributor have put all code in master directly.
+NOTE: Being only contributor I have put all code in master directly.
 
 **App Screens**
-
 
 ![SplashScreen](https://user-images.githubusercontent.com/122507300/212665612-386f2d5a-17f5-4492-b8c7-fa2c796a6fdf.jpeg)
 
