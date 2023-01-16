@@ -6,7 +6,6 @@ import android.os.Bundle
 import androidx.lifecycle.lifecycleScope
 import com.mynt.weather.R
 import com.mynt.weather.utils.Constants
-import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 

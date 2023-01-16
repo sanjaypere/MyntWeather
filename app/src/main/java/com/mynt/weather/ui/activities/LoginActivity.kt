@@ -3,16 +3,15 @@ package com.mynt.weather.ui.activities
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.activity.viewModels
-import androidx.lifecycle.Observer
 import com.mynt.weather.R
 import com.mynt.weather.databinding.ActivityLoginBinding
-import com.mynt.weather.interfaces.MClickListener
+import com.mynt.weather.utils.MClickListener
 import com.mynt.weather.utils.AppResponse
 import com.mynt.weather.utils.Constants
+import com.mynt.weather.utils.isLocationServiceOn
 import com.mynt.weather.viewmodel.LoginViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -41,13 +40,11 @@ class LoginActivity : AppCompatActivity(), MClickListener {
                     finish()
                 }
                 is AppResponse.Error -> {
-                    it.message?.let { v ->
-                        Toast.makeText(this, v, Toast.LENGTH_LONG).show()
+                    it.message?.let { msg ->
+                        Toast.makeText(this, msg, Toast.LENGTH_LONG).show()
                     }
                 }
-                is AppResponse.Loading -> {
-
-                }
+                else -> {}
             }
         }
     }
@@ -55,7 +52,7 @@ class LoginActivity : AppCompatActivity(), MClickListener {
     override fun onButtonClicked(view: View) {
         when (view.id) {
             R.id.buttonLogin -> {
-                if (viewModel.appResponse.value !is AppResponse.Loading) {
+                if (viewModel.appResponse.value !is AppResponse.Loading && isLocationServiceOn()) {
                     viewModel.user.value?.let { viewModel.proceedToLogin(it) }
                 }
             }

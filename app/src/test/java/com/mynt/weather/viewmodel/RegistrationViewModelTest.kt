@@ -2,8 +2,8 @@ package com.mynt.weather.viewmodel
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import com.mynt.weather.getOrAwaitValue
-import com.mynt.weather.models.User
-import com.mynt.weather.repositoryimp.LoginRepositoryImp
+import com.mynt.weather.data.db.entity.UserEntity
+import com.mynt.weather.data.repositoryimp.LoginRepositoryImp
 import com.mynt.weather.utils.AppResponse
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.test.StandardTestDispatcher
@@ -36,6 +36,11 @@ class RegistrationViewModelTest {
         MockitoAnnotations.openMocks(this)
         vm = RegistrationViewModel(repository)
         Dispatchers.setMain(testDispatcher)
+    }
+
+    @After
+    fun tearDown() {
+        Dispatchers.resetMain()
     }
 
     @Test
@@ -79,7 +84,7 @@ class RegistrationViewModelTest {
     }
 
     @Test
-    fun validateRegistrationWithInValidCredential_expectedNull() = runTest {
+    fun validateRegistrationWithInValidCredential_expectedErrorResponse() = runTest {
         val name = "Sanjay"
         val emailId = "sanjay@gmail.com"
         val password = "123456"
@@ -88,12 +93,12 @@ class RegistrationViewModelTest {
                 email = emailId,
                 password = password
             )
-        ).thenReturn(User(name = name, email = emailId, password = password))
+        ).thenReturn(UserEntity(name = name, email = emailId, password = password))
         Mockito.`when`(
-            repository.registerUser(User(name = name, email = emailId, password = password))
+            repository.registerUser(UserEntity(name = name, email = emailId, password = password))
         ).thenReturn(null)
         vm.registerUser(
-            User(
+            UserEntity(
                 name = "Sanjay",
                 email = "san@com",
                 password = "1234"
@@ -117,12 +122,12 @@ class RegistrationViewModelTest {
                 email = emailId,
                 password = password
             )
-        ).thenReturn(User(name = name, email = emailId, password = password))
+        ).thenReturn(UserEntity(name = name, email = emailId, password = password))
         Mockito.`when`(
-            repository.registerUser(User(name = name, email = emailId, password = password))
+            repository.registerUser(UserEntity(name = name, email = emailId, password = password))
         ).thenReturn(null)
         vm.registerUser(
-            User(
+            UserEntity(
                 name = name,
                 email = emailId,
                 password = password
@@ -137,13 +142,13 @@ class RegistrationViewModelTest {
     }
 
     @Test
-    fun validateUserAlreadyRegistered_expectedError() = runTest {
+    fun validateUserAlreadyRegistered_expectedErrorResponse() = runTest {
         val name = "Sanjay"
         val emailId = "sanjay@gmail.com"
         val password = "123456"
 
         Mockito.`when`(
-            repository.registerUser(User(name = name, email = emailId, password = password))
+            repository.registerUser(UserEntity(name = name, email = emailId, password = password))
         ).thenThrow(SQLiteConstraintException())
 
         Mockito.`when`(
@@ -154,7 +159,7 @@ class RegistrationViewModelTest {
         ).thenReturn(null)
 
         vm.registerUser(
-            User(
+            UserEntity(
                 name = name,
                 email = emailId,
                 password = password
@@ -188,10 +193,5 @@ class RegistrationViewModelTest {
         vm.onNameEditTextChanged("", 0, 0, 0)
         val result = vm.validName.getOrAwaitValue()
         assertTrue(result)
-    }
-
-    @After
-    fun tearDown() {
-        Dispatchers.resetMain()
     }
 }

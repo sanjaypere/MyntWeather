@@ -2,15 +2,14 @@ package com.mynt.weather.viewmodel
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import com.mynt.weather.getOrAwaitValue
-import com.mynt.weather.models.User
-import com.mynt.weather.repositoryimp.LoginRepositoryImp
+import com.mynt.weather.data.db.entity.UserEntity
+import com.mynt.weather.data.repositoryimp.LoginRepositoryImp
 import com.mynt.weather.utils.AppResponse
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.test.StandardTestDispatcher
 import kotlinx.coroutines.test.resetMain
 import kotlinx.coroutines.test.runTest
 import kotlinx.coroutines.test.setMain
-import net.sqlcipher.database.SQLiteConstraintException
 import org.junit.Assert.*
 
 import org.junit.After
@@ -28,7 +27,6 @@ class LoginViewModelTest {
 
     @Mock
     lateinit var repository: LoginRepositoryImp
-
     lateinit var vm: LoginViewModel
 
     @Before
@@ -36,6 +34,11 @@ class LoginViewModelTest {
         MockitoAnnotations.openMocks(this)
         vm = LoginViewModel(repository)
         Dispatchers.setMain(testDispatcher)
+    }
+
+    @After
+    fun tearDown() {
+        Dispatchers.resetMain()
     }
 
     @Test
@@ -65,7 +68,7 @@ class LoginViewModelTest {
     }
 
     @Test
-    fun validateUserNotRegistered_expectedError() = runTest {
+    fun validateUserNotRegistered_expectedErrorResponse() = runTest {
         val name = "Sanjay"
         val emailId = "sanjay@gmail.com"
         val password = "123456"
@@ -76,7 +79,7 @@ class LoginViewModelTest {
             )
         ).thenReturn(null)
         vm.proceedToLogin(
-            User(
+            UserEntity(
                 name = name,
                 email = emailId,
                 password = password
@@ -91,14 +94,14 @@ class LoginViewModelTest {
     }
 
     @Test
-    fun validateLoginWithInvalidCredential_expectedNull() = runTest {
+    fun validateLoginWithInvalidCredential_expectedErrorResponse() = runTest {
         Mockito.`when`(
             repository.getUserByEmailAndPassword(
                 email = "sanjay@gmail.com",
                 password = "Sanjay@123456"
             )
-        ).thenReturn(User(name = "Sanjay", email = "sanjay", password = "Sanjay@123456"))
-        vm.proceedToLogin(User(name = "Sanjay", email = "sanjay", password = "Sanjay@123456"))
+        ).thenReturn(UserEntity(name = "Sanjay", email = "sanjay", password = "Sanjay@123456"))
+        vm.proceedToLogin(UserEntity(name = "Sanjay", email = "sanjay", password = "Sanjay@123456"))
         testDispatcher.scheduler.advanceUntilIdle()
         val result = vm.user.getOrAwaitValue()
         val appResponse = vm.appResponse.getOrAwaitValue()
@@ -117,9 +120,9 @@ class LoginViewModelTest {
                 email = emailId,
                 password = password
             )
-        ).thenReturn(User(name = name, email = emailId, password = password))
+        ).thenReturn(UserEntity(name = name, email = emailId, password = password))
         vm.proceedToLogin(
-            User(
+            UserEntity(
                 name = name,
                 email = emailId,
                 password = password
@@ -145,10 +148,5 @@ class LoginViewModelTest {
         vm.onPasswordEditTextChanged("", 0, 0, 0)
         val result = vm.validPassword.getOrAwaitValue()
         assertTrue(result)
-    }
-
-    @After
-    fun tearDown() {
-        Dispatchers.resetMain()
     }
 }

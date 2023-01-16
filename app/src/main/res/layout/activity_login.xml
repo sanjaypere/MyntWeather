@@ -9,7 +9,7 @@
 
         <variable
             name="listener"
-            type="com.mynt.weather.interfaces.MClickListener" />
+            type="com.mynt.weather.utils.MClickListener" />
 
         <variable
             name="vm"

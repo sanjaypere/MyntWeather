@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <import type="com.mynt.weather.R" />
+
+        <variable
+            name="util"
+            type="com.mynt.weather.utils.Utils" />
+
+        <variable
+            name="vm"
+            type="com.mynt.weather.viewmodel.WeatherViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/gradient_background"
+        android:padding="@dimen/sixteenDp"
+        tools:context=".ui.fragments.WeatherFragment">
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent="0.1" />
+
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/schoolMainItem"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/sixteenDp"
+            app:cardCornerRadius="@dimen/sixteenDp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/guideline3">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/default_image_bg"
+                android:padding="@dimen/sixteenDp">
+
+
+                <ImageView
+                    android:id="@+id/imageView"
+                    imageUrl="@{util.getImageIcon(vm.weatherResponse.weather)}"
+                    placeHolderResource="@{R.drawable.default_weather_icon}"
+                    android:layout_width="@dimen/oneEightyDp"
+                    android:layout_height="@dimen/oneEightyDp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:srcCompat="@drawable/default_weather_icon" />
+
+                <TextView
+                    android:id="@+id/temperatureTextView"
+                    style="@style/bold_black_text_30"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@{String.format(@string/temperature_format,util.kelvinToCelsius(vm.weatherResponse.main.temp))}"
+                    android:textColor="@color/trans_white"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/imageView" />
+
+                <TextView
+                    android:id="@+id/weatherTextView"
+                    style="@style/bold_white_text_16"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@{util.getWeather(vm.weatherResponse.weather)}"
+                    android:textColor="@color/trans_white"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/imageView" />
+
+                <TextView
+                    android:id="@+id/cityTestView"
+                    style="@style/bold_white_text_18"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text='@{String.format(@string/city_country, (vm.weatherResponse.name!=null)? vm.weatherResponse.name:"-",(vm.weatherResponse.sys.country!=null)?vm.weatherResponse.sys.country:"-")}'
+                    android:textColor="@color/trans_white"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/weatherTextView" />
+
+
+                <ImageView
+                    android:id="@+id/sunriseImageView"
+                    android:layout_width="@dimen/thirtyDp"
+                    android:layout_height="@dimen/thirtyDp"
+                    android:layout_marginTop="@dimen/twelveDp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/temperatureTextView"
+                    app:srcCompat="@drawable/sunrise" />
+
+
+                <ImageView
+                    android:id="@+id/sunSetImageView"
+                    android:layout_width="@dimen/thirtyDp"
+                    android:layout_height="@dimen/thirtyDp"
+                    android:layout_marginTop="@dimen/tenDp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/sunriseImageView"
+                    app:srcCompat="@drawable/sunset" />
+
+                <TextView
+                    android:id="@+id/textView2"
+                    style="@style/bold_white_text_12"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/tenDp"
+                    android:text="@{util.formatSolarTime(vm.weatherResponse.sys.sunrise)}"
+                    android:textSize="@dimen/fourteenDP"
+                    android:textStyle="bold"
+                    app:layout_constraintBottom_toBottomOf="@+id/sunriseImageView"
+                    app:layout_constraintStart_toEndOf="@+id/sunriseImageView" />
+
+                <TextView
+                    android:id="@+id/textView3"
+                    style="@style/bold_white_text_12"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/tenDp"
+                    android:text="@{util.formatSolarTime(vm.weatherResponse.sys.sunset)}"
+                    android:textSize="@dimen/fourteenDP"
+                    android:textStyle="bold"
+                    app:layout_constraintBottom_toBottomOf="@+id/sunSetImageView"
+                    app:layout_constraintStart_toEndOf="@+id/sunSetImageView" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.cardview.widget.CardView>
+
+        <com.google.android.material.progressindicator.CircularProgressIndicator
+            android:id="@+id/progressIndicator"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:indeterminate="true"
+            app:indicatorColor="@color/purple_500"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/userNameTextView"
+            style="@style/bold_black_text_26"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toTopOf="@+id/guideline3"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

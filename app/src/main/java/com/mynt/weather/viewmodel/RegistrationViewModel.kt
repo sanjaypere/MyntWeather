@@ -1,12 +1,11 @@
 package com.mynt.weather.viewmodel
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.mynt.weather.models.User
-import com.mynt.weather.repository.LoginRepository
+import com.mynt.weather.data.db.entity.UserEntity
+import com.mynt.weather.data.repository.LoginRepository
 import com.mynt.weather.utils.AppResponse
 import com.mynt.weather.utils.Constants
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -21,7 +20,7 @@ class RegistrationViewModel @Inject constructor(private val loginRepository: Log
     private val _validEmail = MutableLiveData<Boolean>()
     private val _validName = MutableLiveData<Boolean>()
     private val _validPassword = MutableLiveData<Boolean>()
-    private val _user = MutableLiveData<User>()
+    private val _userEntity = MutableLiveData<UserEntity>()
     val appResponse: LiveData<AppResponse>
         get() = _appResponse
     val validName: LiveData<Boolean>
@@ -30,17 +29,25 @@ class RegistrationViewModel @Inject constructor(private val loginRepository: Log
         get() = _validEmail
     val validPassword: LiveData<Boolean>
         get() = _validPassword
-    val user: LiveData<User>
-        get() = _user
+    val user: LiveData<UserEntity>
+        get() = _userEntity
 
+    /**
+     * Default initialization
+     */
     init {
-        _user.value = User(email = "", password = "")
+        _userEntity.value = UserEntity(email = "", password = "")
         _validEmail.postValue(true)
         _validPassword.postValue(true)
         _validName.postValue(true)
     }
 
-    fun registerUser(user: User) {
+    /**
+     * Validate user credential for registration and save User detail to DataBase.
+     * If user registered successfully it send Success Response, else send Error response
+     * @param : UserEntity(User detail)
+     */
+    fun registerUser(user: UserEntity) {
         _appResponse.postValue(AppResponse.Loading())
         val vName = isValidName(user.name)
         val vEmail = isValidEmail(user.email)
@@ -55,7 +62,7 @@ class RegistrationViewModel @Inject constructor(private val loginRepository: Log
                     val loggedInUser =
                         loginRepository.getUserByEmailAndPassword(user.email, user.password)
                     loggedInUser?.let {
-                        _user.postValue(it)
+                        _userEntity.postValue(it)
                         _appResponse.postValue(AppResponse.Success())
                     }
                 } catch (e: SQLiteConstraintException) {
@@ -69,26 +76,44 @@ class RegistrationViewModel @Inject constructor(private val loginRepository: Log
         }
     }
 
+    /**
+     * Check for valid email
+     */
     fun isValidEmail(text: String?): Boolean {
         return text?.trim()?.isNotEmpty() == true && Constants.emailPattern.toRegex().matches(text)
     }
 
+    /**
+     * Check for valid password
+     */
     fun isValidPassword(text: String?): Boolean {
         return text?.trim()?.isNotEmpty() == true && text.length >= Constants.passwordLength
     }
 
+    /**
+     * Check for valid name
+     */
     fun isValidName(text: String?): Boolean {
         return text?.trim()?.isNotEmpty() == true && text.length >= Constants.nameLength
     }
 
+    /**
+     * Email editTextChange listener
+     */
     fun onEmailEditTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
         _validEmail.postValue(true)
     }
 
+    /**
+     * Password editTextChange listener
+     */
     fun onPasswordEditTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
         _validPassword.postValue(true)
     }
 
+    /**
+     * Name editTextChange listener
+     */
     fun onNameEditTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
         _validName.postValue(true)
     }

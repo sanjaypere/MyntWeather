@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="listener"
+            type="com.mynt.weather.utils.MClickListener" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/gradient_background"
+        android:padding="@dimen/sixteenDp"
+        tools:context=".ui.fragments.NoNetworkFragment">
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent="0.14" />
+
+        <ImageView
+            android:id="@+id/imageView2"
+            android:layout_width="@dimen/oneEightyDp"
+            android:layout_height="@dimen/oneEightyDp"
+            android:src="@drawable/offline"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/guideline4" />
+
+        <TextView
+            android:id="@+id/noNetworkAvailableTextView"
+            style="@style/bold_black_text_26"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/twelveDp"
+            android:text="@string/no_network_available"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/imageView2" />
+
+        <TextView
+            android:id="@+id/noNetworkAvailableMsgTextView"
+            style="@style/black_text_16"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/twelveDp"
+            android:text="@string/no_network_msg"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/noNetworkAvailableTextView" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/retryAgainButton"
+            style="@style/button_style"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/sixtyFourDp"
+            android:onClick="@{v->listener.onButtonClicked(v)}"
+            android:text="@string/try_again"
+            android:textAllCaps="false"
+            android:textColor="@color/black"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/noNetworkAvailableMsgTextView" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

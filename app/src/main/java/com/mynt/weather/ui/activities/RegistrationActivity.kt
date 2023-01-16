@@ -7,10 +7,9 @@ import android.widget.Toast
 import androidx.activity.viewModels
 import com.mynt.weather.R
 import com.mynt.weather.databinding.ActivityRegistrationBinding
-import com.mynt.weather.interfaces.MClickListener
+import com.mynt.weather.utils.MClickListener
 import com.mynt.weather.utils.AppResponse
 import com.mynt.weather.utils.Constants
-import com.mynt.weather.viewmodel.LoginViewModel
 import com.mynt.weather.viewmodel.RegistrationViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -41,9 +40,7 @@ class RegistrationActivity : AppCompatActivity(), MClickListener {
                         Toast.makeText(this, v, Toast.LENGTH_LONG).show()
                     }
                 }
-                is AppResponse.Loading -> {
-
-                }
+                else -> {}
             }
         }
     }

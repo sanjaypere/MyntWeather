@@ -1,11 +1,16 @@
 <resources>
 
     <dimen name="fourDp">4dp</dimen>
+    <dimen name="tenDp">10dp</dimen>
+    <dimen name="twelveDp">12dp</dimen>
     <dimen name="sixteenDp">16dp</dimen>
     <dimen name="sixteenSp">16sp</dimen>
     <dimen name="sixtyFourDp">64dp</dimen>
     <dimen name="thirtyDp">30dp</dimen>
     <dimen name="hundredDp">100dp</dimen>
+    <dimen name="oneEightyDp">180dp</dimen>
     <dimen name="twentySixdDp">26dp</dimen>
+    <dimen name="eighteenDP">18dp</dimen>
+    <dimen name="fourteenDP">14dp</dimen>
 
 </resources>

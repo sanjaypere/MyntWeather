@@ -1,5 +1,9 @@
 <resources>
 
+    <style name="black_text_10">
+        <item name="android:textSize">@dimen/tenDp</item>
+        <item name="android:textColor">@color/black</item>
+    </style>
 
     <style name="black_text_16">
         <item name="android:textSize">@dimen/sixteenDp</item>
@@ -8,6 +12,30 @@
 
     <style name="bold_black_text_26">
         <item name="android:textSize">@dimen/twentySixdDp</item>
+        <item name="android:textColor">@color/black</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="bold_white_text_12">
+        <item name="android:textSize">@dimen/twelveDp</item>
+        <item name="android:textColor">@color/trans_white</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="bold_white_text_16">
+        <item name="android:textSize">@dimen/sixteenSp</item>
+        <item name="android:textColor">@color/trans_white</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="bold_white_text_18">
+        <item name="android:textSize">@dimen/eighteenDP</item>
+        <item name="android:textColor">@color/trans_white</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="bold_black_text_30">
+        <item name="android:textSize">@dimen/thirtyDp</item>
         <item name="android:textColor">@color/black</item>
         <item name="android:textStyle">bold</item>
     </style>
@@ -26,6 +54,5 @@
         <item name="android:background">@drawable/border_button</item>
         <item name="android:textSize">@dimen/sixteenSp</item>
     </style>
-
 
 </resources>
