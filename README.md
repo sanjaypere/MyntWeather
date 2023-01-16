@@ -12,21 +12,12 @@ The application also provide some other features such as:
 
 **Project details:**
 Architecture: MVVM
+
 Android Studio Version: Android Studio Dolphin|2021.3.1
+
 Programming Language: Kotlin(213-1.7.20 and above)
+
 Device Supported: Android phone(Portrait Orientation)
-
-**Security**
-
-Room Database is protected using SQl Cipher
-Have enabled progard and minify
-
-**Unit Test**
-
-Unit Test for Room Database, Repository, ViewModel and Utils classes. Above 90% test coverage.
-
-<img width="652" alt="Screenshot 2023-01-16 at 4 35 22 PM" src="https://user-images.githubusercontent.com/122507300/212664015-9146c5f6-5f47-42dc-874c-2864cb920c8b.png">
-
 
 NOTE
 
@@ -40,6 +31,16 @@ NOTE
 
 gradle.properties -> passCode
 
+**Security**
+
+Room Database is protected using SQl Cipher
+Have enabled progard and minify
+
+**Unit Test**
+
+Unit Test for Room Database, Repository, ViewModel and Utils classes. Above 90% test coverage.
+
+<img width="652" alt="Screenshot 2023-01-16 at 4 35 22 PM" src="https://user-images.githubusercontent.com/122507300/212664015-9146c5f6-5f47-42dc-874c-2864cb920c8b.png">
 
 **Commits**
 
