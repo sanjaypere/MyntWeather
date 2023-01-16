@@ -34,6 +34,18 @@ gradle.properties -> passCode
 
 **Project Structure**
 
+- Inside main folder we have java->com->mynt->weather
+
+- Under data folder we have covered API request logic, database logic, models and repository.
+
+- Under di folder we have covered dependency injection for Retrofit and Room DB
+
+- Under ui folder we have all activity, fragments and adapters.
+
+- Under utils folder we have covered all commonly used util classes.
+
+- Under viewmodel folder we have viewmodel for login, registration, weather and history. 
+
 <img width="785" alt="Screenshot 2023-01-16 at 5 34 08 PM" src="https://user-images.githubusercontent.com/122507300/212674287-0f4e711b-8b80-47c0-a6b7-afe5ddfbcf6b.png">
 
 **Security**
